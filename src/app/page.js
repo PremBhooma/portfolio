@@ -1,5 +1,10 @@
-import Image from "next/image";
+import ThemeMode from "@/components/theme-mode";
 
 export default function Home() {
-  return <>hello</>;
+  return (
+    <>
+      Hello
+      <ThemeMode />
+    </>
+  );
 }
