@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Moon } from "lucide-react";
 import Link from "next/link";
+import ThemeMode from "./theme-mode";
 
 export default function HomePage() {
   const navigation = [
@@ -37,9 +38,10 @@ export default function HomePage() {
                   {link.name}
                 </Link>
               ))}
-              <Button variant="ghost" size="icon" className="text-white">
+              {/* <Button variant="ghost" size="icon" className="text-white">
                 <Moon className="h-5 w-5" />
-              </Button>
+              </Button> */}
+              <ThemeMode />
             </div>
           </div>
         </nav>
