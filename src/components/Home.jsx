@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Moon } from "lucide-react";
 import Link from "next/link";
 import ThemeMode from "./theme-mode";
+import Particles from "./ui/particles";
 
 export default function HomePage() {
   const navigation = [
@@ -22,78 +23,69 @@ export default function HomePage() {
   ];
 
   return (
-    <div className="min-h-screen relative">
-      <div className="fixed inset-0 bg-gradient-to-br from-teal-950 via-slate-900 to-slate-950"></div>
+    <>
+      <Particles className="absolute inset-0" quantity={100} ease={80} refresh />
 
       {/* Navigation */}
       <header className="relative z-10">
         <nav className="mx-auto max-w-7xl px-6 lg:px-8" aria-label="Top">
-          <div className="flex w-full items-center justify-between py-6">
-            <div className="flex items-center">
-              <span className="text-2xl text-white">*</span>
-            </div>
+          <div className="flex w-full items-center justify-end py-6">
             <div className="ml-10 space-x-8">
               {navigation.map((link) => (
-                <Link key={link.name} href={link.href} className="text-base font-medium text-white hover:text-gray-300">
+                <Link key={link.name} href={link.href} className="text-sm font-nunitoLight font-medium">
                   {link.name}
                 </Link>
               ))}
-              {/* <Button variant="ghost" size="icon" className="text-white">
-                <Moon className="h-5 w-5" />
-              </Button> */}
-              <ThemeMode />
+              {/* <ThemeMode /> */}
             </div>
           </div>
         </nav>
       </header>
 
       {/* Main Content */}
-      <main className="relative z-10 mx-auto max-w-7xl px-6 pt-20 pb-24 sm:pb-32 lg:px-8">
-        <div className="mx-auto max-w-4xl">
-          <h1 className="text-6xl font-bold tracking-tight text-white mb-12 bg-clip-text text-transparent bg-gradient-to-r from-pink-300 to-purple-300 drop-shadow-lg">I&apos;M ADENEKAN WONDERFUL</h1>
+      <div className="mx-auto max-w-4xl px-6 lg:px-8">
+        <h1 className="lg:text-8xl text-6xl font-bold tracking-tight font-sounthernAire mb-8 bg-clip-text text-transparent bg-gradient-to-r from-[#fff] to-[#1E2761] drop-shadow-lg">Prem Bhooma</h1>
 
-          <div className="space-y-6 text-xl text-gray-300 drop-shadow">
-            <p>
-              Your friendly neighborhood frontend developer, UX architect, and JavaScript engineer. I spend my days (and often nights) painting the Internet canvas with
-              <span className="text-white font-semibold"> PROJECTS </span>
-              and lines of code, turning zeroes and ones into immersive, interactive experiences.
-            </p>
+        <div className="space-y-6 text-sm lg:text-lg font-nunitoLight drop-shadow">
+          <p>
+            Your friendly neighborhood frontend developer, UX architect, and JavaScript engineer. I spend my days (and often nights) painting the Internet canvas with
+            <span className=" font-semibold"> PROJECTS </span>
+            and lines of code, turning zeroes and ones into immersive, interactive experiences.
+          </p>
 
-            <p>
-              Bona fide photochromic
-              <span className="text-white font-semibold"> LENS </span>
-              enthusiast - sunlight or indoors, I&apos;ve got it covered. I tread the path of minimalism, finding beauty in simplicity and order. When I&apos;m not crafting beautiful web experiences, you can find me reading
-              <span className="text-white font-semibold"> ARTICLES</span>
-            </p>
+          <p>
+            Your friendly neighborhood frontend developer, UX architect, and JavaScript engineer. I spend my days (and often nights) painting the Internet canvas with
+            <span className=" font-semibold"> PROJECTS </span>
+            and lines of code, turning zeroes and ones into immersive, interactive experiences.
+          </p>
 
-            <p>
-              or swaying to the rhythm of Pop Music & Jazz, losing myself in the captivating flow of melodies. anyways you can
-              <span className="text-white font-semibold"> CONTACT ME</span>
-            </p>
-          </div>
+          <p>
+            or swaying to the rhythm of Pop Music & Jazz, losing myself in the captivating flow of melodies. anyways you can
+            <span className=" font-semibold"> CONTACT ME</span>
+          </p>
+        </div>
 
-          <div className="mt-12">
-            <Link href="#" className="inline-flex items-center text-white hover:text-gray-300">
-              See More About Me
-              <svg className="ml-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        <div className="mt-8">
+          <Link href="#" className="inline-flex items-center  ">
+            See More About Me
+            <svg className="ml-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </Link>
+        </div>
+
+        {/* Social Links */}
+        <div className="mt-10 flex space-x-6">
+          {socialLinks.map((item) => (
+            <Link key={item.name} href={item.href}>
+              <span className="sr-only">{item.name}</span>
+              <svg className="h-6 w-6 hover:text-[#00246B]" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path d={item.icon} />
               </svg>
             </Link>
-          </div>
-
-          {/* Social Links */}
-          <div className="mt-16 flex space-x-6">
-            {socialLinks.map((item) => (
-              <Link key={item.name} href={item.href} className="text-gray-400 hover:text-gray-300">
-                <span className="sr-only">{item.name}</span>
-                <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d={item.icon} />
-                </svg>
-              </Link>
-            ))}
-          </div>
+          ))}
         </div>
-      </main>
-    </div>
+      </div>
+    </>
   );
 }

@@ -69,4 +69,8 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+
+  .dark body {
+    @apply bg-gradient-black-green min-h-screen;
+  }
 }
