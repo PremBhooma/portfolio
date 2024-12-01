@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import Particles from "./ui/particles";
-import { FadeText } from "./ui/fade-text";
-import Footer from "./Footer";
+import Particles from "../../components/ui/particles";
+import { FadeText } from "../../components/ui/fade-text";
+import Footer from "../../components/Footer";
 
 export default function HomePage() {
   return (
@@ -11,15 +11,15 @@ export default function HomePage() {
       <Particles className="absolute inset-0" quantity={100} ease={80} refresh />
 
       <div className="mx-auto max-w-4xl px-6 lg:px-8">
-        {/* <h1 className="lg:text-8xl text-6xl font-bold tracking-tight font-sounthernAire mb-8 bg-clip-text text-transparent bg-gradient-to-r from-[#fff] to-[#1E2761] drop-shadow-lg">Prem Bhooma</h1> */}
-        <FadeText
+        <h1 className="lg:text-8xl text-6xl font-bold tracking-tight font-sounthernAire mb-8 bg-clip-text text-transparent bg-gradient-to-r from-[#fff] to-[#1E2761] drop-shadow-lg">Prem Bhooma</h1>
+        {/* <FadeText
           className="lg:text-8xl text-6xl font-bold tracking-tight font-sounthernAire mb-8 bg-clip-text text-transparent bg-gradient-to-r from-[#fff] to-[#1E2761] drop-shadow-lg"
           direction="up"
           framerProps={{
             show: { transition: { delay: 0.5 } },
           }}
           text="Prem Bhooma"
-        />
+        /> */}
 
         <div className="space-y-6 text-sm lg:text-lg font-nunitoLight drop-shadow">
           <p>

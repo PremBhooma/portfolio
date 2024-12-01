@@ -1,7 +1,7 @@
 import Footer from "@/components/Footer";
-import HomePage from "@/components/Home";
 import Navigation from "@/components/Navigation";
 import ThemeMode from "@/components/theme-mode";
+import HomePage from "./home/page";
 
 export default function Home() {
   return (
