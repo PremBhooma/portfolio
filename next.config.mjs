@@ -1,9 +1,26 @@
+/** @type {import('next').NextConfig} */
 import withPWA from "next-pwa";
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {};
-
-export default withPWA({
+const pwaConfig = {
   dest: "public",
-  ...nextConfig,
-});
+  disable: process.env.NODE_ENV === "development", // Disable PWA in development mode
+  register: true,
+  skipWaiting: true,
+};
+
+const nextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+        pathname: "/**",
+      },
+    ],
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+};
+
+export default withPWA(pwaConfig)(nextConfig);
