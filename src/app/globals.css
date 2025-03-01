@@ -67,10 +67,10 @@ body {
     @apply border-border;
   }
   body {
-    @apply bg-gradient-black-green;
+    @apply bg-background;
   }
 
   .dark body {
-    @apply bg-gradient-black-green min-h-screen;
+    @apply bg-background max-h-screen;
   }
 }
