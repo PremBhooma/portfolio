@@ -1,4 +1,4 @@
-"use client";;
+"use client";
 import { cn } from "@/lib/utils";
 import React, { useEffect, useRef, useState } from "react";
 
@@ -40,17 +40,7 @@ function hexToRgb(hex) {
   return [red, green, blue];
 }
 
-const Particles = ({
-  className = "",
-  quantity = 100,
-  staticity = 50,
-  ease = 50,
-  size = 0.4,
-  refresh = false,
-  color = "#ffffff",
-  vx = 0,
-  vy = 0,
-}) => {
+const Particles = ({ className = "", quantity = 100, staticity = 50, ease = 50, size = 0.4, refresh = false, color = "#ffffff", vx = 0, vy = 0 }) => {
   const canvasRef = useRef(null);
   const canvasContainerRef = useRef(null);
   const context = useRef(null);
@@ -176,8 +166,7 @@ const Particles = ({
   };
 
   const remapValue = (value, start1, end1, start2, end2) => {
-    const remapped =
-      ((value - start1) * (end2 - start2)) / (end1 - start1) + start2;
+    const remapped = ((value - start1) * (end2 - start2)) / (end1 - start1) + start2;
     return remapped > 0 ? remapped : 0;
   };
 
@@ -203,22 +192,13 @@ const Particles = ({
       }
       circle.x += circle.dx + vx;
       circle.y += circle.dy + vy;
-      circle.translateX +=
-        (mouse.current.x / (staticity / circle.magnetism) - circle.translateX) /
-        ease;
-      circle.translateY +=
-        (mouse.current.y / (staticity / circle.magnetism) - circle.translateY) /
-        ease;
+      circle.translateX += (mouse.current.x / (staticity / circle.magnetism) - circle.translateX) / ease;
+      circle.translateY += (mouse.current.y / (staticity / circle.magnetism) - circle.translateY) / ease;
 
       drawCircle(circle, true);
 
       // circle gets out of the canvas
-      if (
-        circle.x < -circle.size ||
-        circle.x > canvasSize.current.w + circle.size ||
-        circle.y < -circle.size ||
-        circle.y > canvasSize.current.h + circle.size
-      ) {
+      if (circle.x < -circle.size || circle.x > canvasSize.current.w + circle.size || circle.y < -circle.size || circle.y > canvasSize.current.h + circle.size) {
         // remove the circle from the array
         circles.current.splice(i, 1);
         // create a new circle
@@ -231,12 +211,9 @@ const Particles = ({
   };
 
   return (
-    (<div
-      className={cn("pointer-events-none", className)}
-      ref={canvasContainerRef}
-      aria-hidden="true">
-      <canvas ref={canvasRef} className="size-full" />
-    </div>)
+    <div className={cn("pointer-events-none", className)} ref={canvasContainerRef} aria-hidden="true">
+      <canvas ref={canvasRef} className="size-full max-h-screen" />
+    </div>
   );
 };
 
