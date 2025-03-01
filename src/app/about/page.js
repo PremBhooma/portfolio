@@ -1,13 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import Footer from "../../components/Footer";
+import Image from "next/image";
 import Navigation from "@/components/Navigation";
 import Particles from "../../components/ui/particles";
 import { twMerge } from "tailwind-merge";
-import { FadeText } from "../../components/ui/fade-text";
 import { TracingBeam } from "@/components/ui/tracing-beam-about";
-import Image from "next/image";
+
 
 
 export default function AboutPage() {
@@ -28,8 +27,8 @@ export default function AboutPage() {
                 </p>
 
                 <div className="text-sm  prose prose-sm dark:prose-invert">
-                  {item?.image && <Image src={item?.image} alt="blog thumbnail" height="1000"
-                    width="1000" className="rounded-lg mb-10 object-cover" />}
+                  {item?.image && <Image src={item?.image} alt="blog thumbnail" height={1000}
+                    width={1000} className="rounded-lg mb-10 object-cover" />}
                   {item.description}
                 </div>
               </div>
@@ -52,7 +51,7 @@ const dummyContent = [
       </>
     ),
     badge: "React",
-    image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=3540&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    image: "/images/aitoolsbazaaar.png",
   },
   {
     title: "Lorem Ipsum Dolor Sit Amet",
