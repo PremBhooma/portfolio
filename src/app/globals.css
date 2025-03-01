@@ -67,7 +67,7 @@ body {
     @apply border-border;
   }
   body {
-    @apply bg-background;
+    @apply bg-background max-h-screen;
   }
 
   .dark body {
