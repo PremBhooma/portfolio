@@ -10,84 +10,10 @@ import { BorderBeam } from "@/components/magicui/border-beam";
 
 export default function AboutPage() {
   return (
-    // <>
-    //   <div>
-    //     <Navigation />
-    //     <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 relative max-w-xl lg:max-w-4xl mx-auto min-h-screen">
-    //       {/* Hello Div - Hidden on mobile, fixed on larger screens */}
-    //       <div className="hidden lg:block h-32 lg:sticky lg:top-16 col-span-1 space-y-6">
-    //         <Card className="relative overflow-hidden">
-    //           <CardHeader className="pb-6">
-    //             <CardTitle className="text-2xl font-bold mb-4">Projects</CardTitle>
-    //             <CardDescription>
-    //               <ul className="space-y-3 text-white">
-    //                 <li className="text-sm border rounded-full px-4 py-1.5 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">AI Tools Bazaar</li>
-    //                 <li className="text-sm border rounded-full px-4 py-1.5 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">TeckDollars</li>
-    //                 <li className="text-sm border rounded-full px-4 py-1.5 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">Vegas Tattoo</li>
-    //                 <li className="text-sm border rounded-full px-4 py-1.5 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">Patientifi</li>
-    //                 <li className="text-sm border rounded-full px-4 py-1.5 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">Zeengo</li>
-    //                 <li className="text-sm border rounded-full px-4 py-1.5 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">Apna Garamdharam</li>
-    //               </ul>
-    //             </CardDescription>
-    //           </CardHeader>
-    //           <CardContent>
-    //             <div className="grid w-full items-center gap-4"></div>
-    //           </CardContent>
-    //           <BorderBeam duration={8} size={100} />
-    //         </Card>
-
-    //         <Card className="relative overflow-hidden">
-    //           <CardHeader className="pb-6">
-    //             <CardTitle className="text-2xl font-bold mb-4">Teck Stacks</CardTitle>
-    //             <CardDescription>
-    //               <ul className="space-y-3 text-white">
-    //                 <li className="text-sm border rounded-full px-4 py-1.5 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">AI Tools Bazaar</li>
-    //                 <li className="text-sm border rounded-full px-4 py-1.5 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">TeckDollars</li>
-    //                 <li className="text-sm border rounded-full px-4 py-1.5 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">Vegas Tattoo</li>
-    //                 <li className="text-sm border rounded-full px-4 py-1.5 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">Patientifi</li>
-    //                 <li className="text-sm border rounded-full px-4 py-1.5 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">Apna Garamdharam</li>
-    //                 <li className="text-sm border rounded-full px-4 py-1.5 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">Zeengo</li>
-    //               </ul>
-    //             </CardDescription>
-    //           </CardHeader>
-    //           <CardContent>
-    //             <div className="grid w-full items-center gap-4"></div>
-    //           </CardContent>
-    //           <BorderBeam duration={8} size={100} />
-    //         </Card>
-    //       </div>
-
-    //       {/* Scrollable Content Div */}
-    //       <div className="antialiased col-span-1 lg:col-span-3">
-    //         {dummyContent.map((item, index) => (
-    //           <div key={index} className="mb-10 lg:pt-5">
-    //             <h2 className="text-2xl mb-4">{item.title}</h2>
-
-    //             {/* Corrected badge mapping */}
-    //             <div className="flex flex-wrap gap-2 mb-4">
-    //               {item.badge.map((ele, idx) => (
-    //                 <span key={idx} className="border bg-black text-white rounded-full text-sm w-fit px-4 py-1">
-    //                   {ele}
-    //                 </span>
-    //               ))}
-    //             </div>
-
-    //             <div className="text-sm prose prose-sm dark:prose-invert">
-    //               {item?.image && <Image src={item?.image} alt="blog thumbnail" height={1000} width={1000} className="rounded-lg mb-10 object-cover" />}
-    //               {item.description}
-    //             </div>
-    //           </div>
-    //         ))}
-    //       </div>
-    //     </div>
-    //   </div>
-    //   <Particles className="absolute inset-0" quantity={200} ease={100} refresh />
-    // </>
-
     <>
       <div className="h-screen overflow-hidden relative">
         <Navigation />
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 relative max-w-xl lg:max-w-4xl mx-auto h-[calc(100vh-4rem)]">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 relative max-w-xl lg:max-w-4xl mx-auto px-6 lg:px-0 h-[calc(100vh-4rem)]">
           {/* Hello Div - Hidden on mobile, sticky and scrollable on larger screens */}
           <div className="hidden lg:block col-span-1 space-y-6 overflow-y-auto lg:sticky lg:top-16">
             <Card className="relative overflow-hidden">
@@ -204,22 +130,6 @@ const dummyContent = [
           <li>Backend: Node.js, Express.js</li>
           <li>Database: MongoDB</li>
         </ul>
-
-        <h3 className="text-lg font-semibold mb-2">My Contributions & Achievements</h3>
-        <ul className="list-disc list-inside mb-4">
-          <li>Developed a responsive frontend using Next.js and Tailwind CSS, enhanced with modern UI libraries.</li>
-          <li>Built a scalable RESTful API with Node.js, Express.js, and MongoDB for efficient data management.</li>
-          <li>Implemented secure authentication, payment integration, and advanced features like the ad manager.</li>
-          <li>Optimized state management with Redux Toolkit and TanStack Query for real-time updates.</li>
-          <li>Ensured performance and SEO optimization using Next.js for faster load times and better discoverability.</li>
-        </ul>
-
-        <h3 className="text-lg font-semibold mb-2">Impact</h3>
-        <ul className="list-disc list-inside mb-4">
-          <li>Created a one-stop destination for AI enthusiasts, streamlining access to tools and opportunities.</li>
-          <li>Enhanced user engagement through gamified features like coupons and referrals.</li>
-          <li>Demonstrated full-stack expertise, from pixel-perfect UIs to robust backend systems.</li>
-        </ul>
       </>
     ),
     badge: ["Javascript", "React.js", "Next.js", "Shadcn UI", "Aceternity UI", "Magic UI", "Radix", "Tailwind CSS", "TanStack Query", "Redux Toolkit", "Node.js", "Express.js", "MongoDB"],
@@ -227,28 +137,44 @@ const dummyContent = [
     link: "https://www.aitoolsbazaar.com/",
   },
   {
-    title: "AI Tools Bazaar",
+    title: "Vegas Tattoo - Showcase of Artistry",
     description: (
       <>
-        <p>Sit duis est minim proident non nisi velit non consectetur. Esse adipisicing laboris consectetur enim ipsum reprehenderit eu deserunt Lorem ut aliqua anim do. Duis cupidatat qui irure cupidatat incididunt incididunt enim magna id est qui sunt fugiat. Laboris do duis pariatur fugiat Lorem aute sit ullamco. Qui deserunt non reprehenderit dolore nisi velit exercitation Lorem qui do enim culpa. Aliqua eiusmod in occaecat reprehenderit laborum nostrud fugiat voluptate do Lorem culpa officia sint labore. Tempor consectetur excepteur ut fugiat veniam commodo et labore dolore commodo pariatur.</p>
-        <p>Dolor minim irure ut Lorem proident. Ipsum do pariatur est ad ad veniam in commodo id reprehenderit adipisicing. Proident duis exercitation ad quis ex cupidatat cupidatat occaecat adipisicing.</p>
-        <p>Tempor quis dolor veniam quis dolor. Sit reprehenderit eiusmod reprehenderit deserunt amet laborum consequat adipisicing officia qui irure id sint adipisicing. Adipisicing fugiat aliqua nulla nostrud. Amet culpa officia aliquip deserunt veniam deserunt officia adipisicing aliquip proident officia sunt.</p>
+        <p className="mb-4">A dynamic, user-friendly platform designed to showcase the exceptional tattoo designs and pricing from Vegas Tattoo Studio, providing detailed insights into the studio’s offerings, artists, and ambiance. This project features an intuitive interface, a comprehensive gallery of tattoo designs, transparent pricing details, and rich studio information to engage tattoo enthusiasts. Built with a modern, scalable tech stack, it delivers a seamless browsing experience with visually stunning animations and robust performance.</p>
+
+        <h3 className="text-lg font-semibold mb-2">Key Features & Highlights</h3>
+        <ul className="list-disc list-inside mb-4 space-y-2">
+          <li>
+            <span className="font-medium">Transparent Pricing:</span> Displays clear and detailed pricing information, empowering users to plan their tattoo experience with confidence.
+          </li>
+          <li>
+            <span className="font-medium">User-Friendly Interface:</span> Leverages modern UI libraries for a clean, intuitive, and visually appealing design that enhances user navigation.
+          </li>
+          <li>
+            <span className="font-medium">Studio Details:</span> Provides in-depth information about the Vegas Tattoo Studio, including artist profiles, ambiance, and booking options.
+          </li>
+          <li>
+            <span className="font-medium">Responsive Design:</span> Ensures a seamless experience across devices, from desktops to mobile phones, with optimized performance.
+          </li>
+          <li>
+            <span className="font-medium">Engaging Animations:</span> Integrates animated components to highlight featured designs and create an immersive browsing experience.
+          </li>
+        </ul>
+
+        <h3 className="text-lg font-semibold mb-2">Tech Stack</h3>
+        <ul className="list-disc list-inside mb-4">
+          <li>Frontend: JavaScript, React.js, Next.js, Tailwind CSS, Shadcn UI, Aceternity UI, Magic UI, Radix</li>
+        </ul>
       </>
     ),
-    badge: ["Javascript", "React.js", "Next.js", "Shadcn UI", "Aceternity UI", "Magic UI", "Radix", "Tailwind CSS", "Tenstack", "Redux Toolkit", "Node.js", "Express.js", "MongoDB"],
-    image: "/images/aitoolsbazaaar.png",
-    link: "https://www.aitoolsbazaar.com/",
+    badge: ["Javascript", "React.js", "Next.js", "Shadcn UI", "Aceternity UI", "Magic UI", "Radix", "Tailwind CSS"],
+    image: "/images/vegas.png",
+    link: "https://www.vegas-tattoo.com/",
   },
   {
-    title: "AI Tools Bazaar",
-    description: (
-      <>
-        <p>Sit duis est minim proident non nisi velit non consectetur. Esse adipisicing laboris consectetur enim ipsum reprehenderit eu deserunt Lorem ut aliqua anim do. Duis cupidatat qui irure cupidatat incididunt incididunt enim magna id est qui sunt fugiat. Laboris do duis pariatur fugiat Lorem aute sit ullamco. Qui deserunt non reprehenderit dolore nisi velit exercitation Lorem qui do enim culpa. Aliqua eiusmod in occaecat reprehenderit laborum nostrud fugiat voluptate do Lorem culpa officia sint labore. Tempor consectetur excepteur ut fugiat veniam commodo et labore dolore commodo pariatur.</p>
-        <p>Dolor minim irure ut Lorem proident. Ipsum do pariatur est ad ad veniam in commodo id reprehenderit adipisicing. Proident duis exercitation ad quis ex cupidatat cupidatat occaecat adipisicing.</p>
-        <p>Tempor quis dolor veniam quis dolor. Sit reprehenderit eiusmod reprehenderit deserunt amet laborum consequat adipisicing officia qui irure id sint adipisicing. Adipisicing fugiat aliqua nulla nostrud. Amet culpa officia aliquip deserunt veniam deserunt officia adipisicing aliquip proident officia sunt.</p>
-      </>
-    ),
-    badge: ["Javascript", "React.js", "Next.js", "Shadcn UI", "Aceternity UI", "Magic UI", "Radix", "Tailwind CSS", "Tenstack", "Redux Toolkit", "Node.js", "Express.js", "MongoDB"],
-    image: "/images/aitoolsbazaaar.png",
+    title: "Updating Soon...",
+    description: <></>,
+    badge: [],
+    image: "",
   },
 ];
