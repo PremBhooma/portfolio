@@ -7,14 +7,11 @@ import Particles from "../../components/ui/particles";
 import { twMerge } from "tailwind-merge";
 import { TracingBeam } from "@/components/ui/tracing-beam-about";
 
-
-
 export default function AboutPage() {
   return (
     <>
       <div>
         <Particles className="absolute inset-0" quantity={200} ease={100} refresh />
-
         <Navigation />
         <TracingBeam className="px-6">
           <div className="max-w-xl lg:max-w-2xl mx-auto antialiased pt-4 relative">
