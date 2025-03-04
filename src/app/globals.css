@@ -62,6 +62,24 @@ body {
   }
 }
 
+.custom-scrollbar {
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: transparent transparent; /* Firefox */
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px; /* Very thin scrollbar */
+  height: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent; /* Transparent track */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: transparent; /* Transparent thumb */
+}
+
 @layer base {
   * {
     @apply border-border;
