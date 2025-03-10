@@ -54,7 +54,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} ${sounthernAire.variable} ${remachine.variable} ${nunitoRegular.variable}  ${nunitoBold.variable} ${nunitoLight.variable} antialiased`}>
         {" "}
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange>
           {children}
         </ThemeProvider>
       </body>
