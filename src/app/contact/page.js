@@ -8,8 +8,8 @@ import Particles from "@/components/ui/particles";
 export default function ContactPage() {
   return (
     <>
-      <div className="flex flex-col">
-        <Particles className="absolute inset-0" quantity={200} ease={100} refresh />
+      <div className="relative flex flex-col min-h-screen overflow-hidden">
+        <Particles className="absolute inset-0 -z-10" quantity={200} ease={100} refresh />
         <Navigation />
         <div className="flex-1 flex justify-center items-center">
           <div className="mx-auto max-w-4xl px-6 lg:px-4 py-10">
