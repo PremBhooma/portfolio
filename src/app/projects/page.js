@@ -169,7 +169,7 @@ const dummyContent = [
     ),
     badge: ["Javascript", "React.js", "Next.js", "Shadcn UI", "Aceternity UI", "Magic UI", "Radix", "Tailwind CSS"],
     image: "/images/vegas.png",
-    link: "https://www.vegas-tattoo.com/",
+    link: "https://www.vegastattooofficial.com/",
   },
   {
     title: "Updating Soon...",
