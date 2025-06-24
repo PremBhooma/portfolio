@@ -113,23 +113,69 @@ const dummyContent = [
         <p className="mb-4">A comprehensive, user-friendly platform designed to centralize resources for AI enthusiasts and professionals, featuring the largest database of thousands of AI tools, tutorials, gadgets, events, jobs, and more. Updated daily, this platform integrates secure authentication, payment systems, an in-built ad manager, plus coupon and referral systems to enhance user engagement and monetization. Built using a modern, scalable tech stack, it delivers a seamless experience with an intuitive UI and robust backend.</p>
 
         <h3 className="text-lg font-semibold mb-2">Key Features & Highlights</h3>
-        <ul className="list-disc list-inside mb-4">
-          <li>Extensive AI Resource Hub: Aggregates thousands of AI tools, tutorials, gadgets, events, and jobs, updated daily.</li>
-          <li>User-Friendly Interface: Designed with modern UI libraries for a clean and intuitive experience.</li>
-          <li>Secure Authentication: Implements robust user authentication for data security.</li>
-          <li>Integrated Payment System: Handles transactions securely for subscriptions and ad placements.</li>
-          <li>In-Built Ad Manager: Enables efficient advertisement management for monetization.</li>
-          <li>Coupon & Referral System: Boosts engagement with incentives for users.</li>
-          <li>Scalable Architecture: Built to handle growing traffic and data demands.</li>
+        <ul className="list-disc pl-5 space-y-2">
+          <li>
+            <p>
+              <span className="font-medium">Extensive AI Resource Hub:</span> Aggregates thousands of AI tools, tutorials, gadgets, events, and jobs, updated daily.
+            </p>
+          </li>
+          <li>
+            <p>
+              <span className="font-medium">User-Friendly Interface:</span> Designed with modern UI libraries for a clean and intuitive experience.
+            </p>
+          </li>
+          <li>
+            <p>
+              <span className="font-medium">Secure Authentication:</span> Implements robust user authentication for data security.
+            </p>
+          </li>
+          <li>
+            <p>
+              <span className="font-medium">Integrated Payment System:</span> Handles transactions securely for subscriptions and ad placements.
+            </p>
+          </li>
+          <li>
+            <p>
+              <span className="font-medium">In-Built Ad Manager:</span> Enables efficient advertisement management for monetization.
+            </p>
+          </li>
+          <li>
+            <p>
+              <span className="font-medium">Coupon & Referral System:</span> Boosts engagement with incentives for users.
+            </p>
+          </li>
+          <li>
+            <p>
+              <span className="font-medium">Scalable Architecture:</span> Built to handle growing traffic and data demands.
+            </p>
+          </li>
         </ul>
 
+
         <h3 className="text-lg font-semibold mb-2">Tech Stack</h3>
-        <ul className="list-disc list-inside mb-4">
-          <li>Frontend: JavaScript, React.js, Next.js, Tailwind CSS, Shadcn UI, Aceternity UI, Magic UI, Radix</li>
-          <li>State Management: Redux Toolkit, TanStack Query</li>
-          <li>Backend: Node.js, Express.js</li>
-          <li>Database: MongoDB</li>
+        <ul className="list-disc pl-5 space-y-2">
+          <li>
+            <p>
+              <span className="font-medium">Frontend:</span> JavaScript, React.js, Next.js, Tailwind CSS, Shadcn UI, Aceternity UI, Magic UI, Radix
+            </p>
+          </li>
+          <li>
+            <p>
+              <span className="font-medium">State Management:</span> Redux Toolkit, TanStack Query
+            </p>
+          </li>
+          <li>
+            <p>
+              <span className="font-medium">Backend:</span> Node.js, Express.js
+            </p>
+          </li>
+          <li>
+            <p>
+              <span className="font-medium">Database:</span> MongoDB
+            </p>
+          </li>
         </ul>
+
       </>
     ),
     badge: ["Javascript", "React.js", "Next.js", "Shadcn UI", "Aceternity UI", "Magic UI", "Radix", "Tailwind CSS", "TanStack Query", "Redux Toolkit", "Node.js", "Express.js", "MongoDB"],
@@ -143,28 +189,44 @@ const dummyContent = [
         <p className="mb-4">A dynamic, user-friendly platform designed to showcase the exceptional tattoo designs and pricing from Vegas Tattoo Studio, providing detailed insights into the studio’s offerings, artists, and ambiance. This project features an intuitive interface, a comprehensive gallery of tattoo designs, transparent pricing details, and rich studio information to engage tattoo enthusiasts. Built with a modern, scalable tech stack, it delivers a seamless browsing experience with visually stunning animations and robust performance.</p>
 
         <h3 className="text-lg font-semibold mb-2">Key Features & Highlights</h3>
-        <ul className="list-disc list-inside mb-4 space-y-2">
+        <ul className="list-disc pl-5 space-y-2">
           <li>
-            <span className="font-medium">Transparent Pricing:</span> Displays clear and detailed pricing information, empowering users to plan their tattoo experience with confidence.
+            <p>
+              <span className="font-medium">Transparent Pricing:</span> Displays clear and detailed pricing information, empowering users to plan their tattoo experience with confidence.
+            </p>
           </li>
           <li>
-            <span className="font-medium">User-Friendly Interface:</span> Leverages modern UI libraries for a clean, intuitive, and visually appealing design that enhances user navigation.
+            <p>
+              <span className="font-medium">User-Friendly Interface:</span> Leverages modern UI libraries for a clean, intuitive, and visually appealing design that enhances user navigation.
+            </p>
           </li>
           <li>
-            <span className="font-medium">Studio Details:</span> Provides in-depth information about the Vegas Tattoo Studio, including artist profiles, ambiance, and booking options.
+            <p>
+              <span className="font-medium">Studio Details:</span> Provides in-depth information about the Vegas Tattoo Studio, including artist profiles, ambiance, and booking options.
+            </p>
           </li>
           <li>
-            <span className="font-medium">Responsive Design:</span> Ensures a seamless experience across devices, from desktops to mobile phones, with optimized performance.
+            <p>
+              <span className="font-medium">Responsive Design:</span> Ensures a seamless experience across devices, from desktops to mobile phones, with optimized performance.
+            </p>
           </li>
           <li>
-            <span className="font-medium">Engaging Animations:</span> Integrates animated components to highlight featured designs and create an immersive browsing experience.
+            <p>
+              <span className="font-medium">Engaging Animations:</span> Integrates animated components to highlight featured designs and create an immersive browsing experience.
+            </p>
           </li>
         </ul>
 
+
         <h3 className="text-lg font-semibold mb-2">Tech Stack</h3>
-        <ul className="list-disc list-inside mb-4">
-          <li>Frontend: JavaScript, React.js, Next.js, Tailwind CSS, Shadcn UI, Aceternity UI, Magic UI, Radix</li>
+        <ul className="list-disc pl-5 space-y-2">
+          <li>
+            <p>
+              <span className="font-medium">Frontend:</span> JavaScript, React.js, Next.js, Tailwind CSS, Shadcn UI, Aceternity UI, Magic UI, Radix
+            </p>
+          </li>
         </ul>
+
       </>
     ),
     badge: ["Javascript", "React.js", "Next.js", "Shadcn UI", "Aceternity UI", "Magic UI", "Radix", "Tailwind CSS"],
