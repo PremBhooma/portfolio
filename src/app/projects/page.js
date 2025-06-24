@@ -29,7 +29,7 @@ export default function ProjectsPage() {
                     </li>
                     <li className="text-sm border rounded-full px-4 py-1.5 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
                       {" "}
-                      <Link href="https://vegas-tau.vercel.app/" target="_blank">
+                      <Link href="https://www.vegastattooofficial.com/" target="_blank">
                         Vegas Tattoo
                       </Link>
                     </li>
@@ -42,7 +42,7 @@ export default function ProjectsPage() {
 
                     <li className="text-sm border rounded-full px-4 py-1.5 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
                       {" "}
-                      <Link href="https://staffing-livid.vercel.app/" target="_blank">
+                      <Link href="https://www.tekdollars.com/" target="_blank">
                         TeckDollars
                       </Link>
                     </li>
