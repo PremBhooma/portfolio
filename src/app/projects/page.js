@@ -48,7 +48,7 @@ export default function ProjectsPage() {
                     </li>
                     <li className="text-sm border rounded-full px-4 py-1.5 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
                       {" "}
-                      <Link href="https://zeengo.vercel.app/" target="_blank">
+                      <Link href="https://www.myzeengo.com/" target="_blank">
                         Zeengo
                       </Link>
                     </li>
