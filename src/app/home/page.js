@@ -23,7 +23,7 @@ export default function HomePage() {
         </div>
 
         <div className="mt-5">
-          <Link href="#" className="inline-flex items-center">
+          <Link href="/contact" className="inline-flex items-center">
             Let's build something awesome together! CONTACT ME ✨
           </Link>
         </div>
