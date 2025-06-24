@@ -13,7 +13,7 @@ export default function ProjectsPage() {
     <>
       <div className="h-screen overflow-hidden relative">
         <Navigation />
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 relative max-w-xl lg:max-w-4xl mx-auto px-6 lg:px-0 h-[calc(100vh-4rem)]">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 relative max-w-xl lg:max-w-4xl mx-auto px-6 lg:px-0 h-[calc(100vh-4rem)] z-10">
           {/* Hello Div - Hidden on mobile, sticky and scrollable on larger screens */}
           <div className="hidden lg:block col-span-1 space-y-6 overflow-y-auto lg:sticky lg:top-16">
             <Card className="relative overflow-hidden">

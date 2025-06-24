@@ -6,7 +6,7 @@ import Footer from "../../components/Footer";
 export default function HomePage() {
   return (
     <>
-      <div className="mx-auto max-w-4xl px-6 lg:px-4 py-10">
+      <div className="mx-auto max-w-4xl px-6 lg:px-4 py-10 z-10">
         <h1 className="lg:text-8xl text-6xl font-bold tracking-tight font-sounthernAire mb-8 bg-clip-text text-transparent bg-gradient-to-r from-[#fff] to-[#1E2761] drop-shadow-lg">Prem Bhooma</h1>
 
         <div className="space-y-6 text-sm lg:text-[16px] font-nunitoLight drop-shadow">
