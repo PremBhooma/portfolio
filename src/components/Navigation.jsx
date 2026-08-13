@@ -6,18 +6,15 @@ import React from "react";
 
 export default function Navigation() {
   const path = usePathname();
-  console.log("Path:", path);
 
   const navigation = [
     { name: "Prem Bhooma", href: "/" },
-    // { name: "About", href: "/about" },
     { name: "Projects", href: "/projects" },
     { name: "Contact", href: "/contact" },
   ];
 
   // Filter navigation items based on the current path
   const filteredNavigation = navigation.filter((link) => {
-    // Only hide the link if the path exactly matches the href
     return path !== link.href;
   });
 

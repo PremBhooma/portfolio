@@ -1,6 +1,4 @@
-import Footer from "@/components/Footer";
 import Navigation from "@/components/Navigation";
-import ThemeMode from "@/components/theme-mode";
 import HomePage from "./home/page";
 import Particles from "@/components/ui/particles";
 
