@@ -1,4 +1,4 @@
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5005";
 
 // Get auth token from localStorage
 const getToken = () => {
@@ -144,6 +144,7 @@ export const deleteSocialLink = (id) =>
 // ============ HELPERS ============
 export const getImageUrl = (imagePath) => {
   if (!imagePath) return null;
-  if (imagePath.startsWith("http")) return imagePath;
-  return `${API_BASE}/${imagePath}`;
+  if (imagePath.startsWith("http://") || imagePath.startsWith("https://")) return imagePath;
+  const cleanPath = imagePath.startsWith("/") ? imagePath.slice(1) : imagePath;
+  return `${API_BASE}/${cleanPath}`;
 };
