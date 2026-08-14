@@ -51,7 +51,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} ${sounthernAire.variable} ${remachine.variable} ${nunitoRegular.variable}  ${nunitoBold.variable} ${nunitoLight.variable} antialiased`}>
         {" "}
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange>
