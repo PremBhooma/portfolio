@@ -91,9 +91,16 @@ export default function AdminResumePage() {
           <div className="flex items-center gap-2 flex-wrap">
             <button
               onClick={() => setShowAnalysisModal(true)}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white text-xs font-medium rounded-md shadow-md transition-all"
+              className="relative group inline-flex items-center gap-2 px-3.5 py-1.5 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 hover:from-indigo-500 hover:via-purple-500 hover:to-pink-500 text-white text-xs font-semibold rounded-lg shadow-[0_0_20px_rgba(168,85,247,0.35)] border border-purple-400/40 transition-all hover:scale-[1.02] active:scale-[0.98]"
             >
-              ⚡ Analyze Resume & Sync Projects
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-300"></span>
+              </span>
+              <span>✨ Analyze Resume & Sync Projects</span>
+              <span className="text-[9px] px-1.5 py-0.2 bg-white/20 rounded font-mono font-bold">
+                AI 2.5
+              </span>
             </button>
 
             <a
