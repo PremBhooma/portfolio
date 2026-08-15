@@ -136,7 +136,14 @@ export default function ResumeAnalysisModal({ isOpen, onClose, onSyncSuccess }) 
               ⚡
             </div>
             <div>
-              <h2 className="text-sm font-bold text-white">Resume Project Analysis & Sync Workbench</h2>
+              <div className="flex items-center gap-2">
+                <h2 className="text-sm font-bold text-white">Resume Project Analysis & Sync Workbench</h2>
+                {analysisData?.engine && (
+                  <span className="text-[10px] px-2 py-0.5 bg-indigo-500/20 text-indigo-300 rounded-full font-semibold border border-indigo-500/30">
+                    ✨ {analysisData.engine}
+                  </span>
+                )}
+              </div>
               <p className="text-[11px] text-gray-400">
                 {analysisData?.resumeInfo?.fileName
                   ? `Analyzed: ${analysisData.resumeInfo.fileName}`
