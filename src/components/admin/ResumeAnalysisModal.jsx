@@ -58,15 +58,16 @@ export default function ResumeAnalysisModal({ isOpen, onClose, onSyncSuccess }) 
   const [successMsg, setSuccessMsg] = useState("");
   const [analysisData, setAnalysisData] = useState(null);
 
+  // Selection states
+  const [selectedNew, setSelectedNew] = useState({});
+  const [selectedUpdates, setSelectedUpdates] = useState({});
+
   // Cinematic AI Animation States
   const [currentPhase, setCurrentPhase] = useState(0);
   const [progress, setProgress] = useState(10);
   const [terminalLogs, setTerminalLogs] = useState([]);
-  const terminalEndRef = useRef(null);
-
-  // Selection states
-  const [selectedNew, setSelectedNew] = useState({});
-  const [selectedUpdates, setSelectedUpdates] = useState({});
+  const terminalBoxRef = useRef(null);
+  const modalBodyRef = useRef(null);
 
   // Stream terminal logs during loading
   useEffect(() => {
@@ -100,9 +101,10 @@ export default function ResumeAnalysisModal({ isOpen, onClose, onSyncSuccess }) 
     };
   }, [loading]);
 
+  // Auto-scroll ONLY the terminal box without affecting parent container
   useEffect(() => {
-    if (terminalEndRef.current) {
-      terminalEndRef.current.scrollIntoView({ behavior: "smooth" });
+    if (terminalBoxRef.current) {
+      terminalBoxRef.current.scrollTop = terminalBoxRef.current.scrollHeight;
     }
   }, [terminalLogs]);
 
@@ -114,6 +116,9 @@ export default function ResumeAnalysisModal({ isOpen, onClose, onSyncSuccess }) 
     setCurrentPhase(0);
     setProgress(15);
     setTerminalLogs([]);
+    if (modalBodyRef.current) {
+      modalBodyRef.current.scrollTop = 0;
+    }
 
     try {
       const data = await analyzeResume();
@@ -266,58 +271,58 @@ export default function ResumeAnalysisModal({ isOpen, onClose, onSyncSuccess }) 
         </div>
 
         {/* Modal Body */}
-        <div className="p-4 sm:p-5 flex-1 overflow-y-auto space-y-4">
+        <div ref={modalBodyRef} className="p-4 sm:p-5 flex-1 overflow-y-auto space-y-4">
           {/* ============================================================ */}
           {/* CINEMATIC AI LOADING SCREEN */}
           {/* ============================================================ */}
           {loading ? (
-            <div className="py-6 px-2 sm:px-6 space-y-6 animate-fade-in">
+            <div className="py-2 px-2 sm:px-4 space-y-4 animate-fade-in">
               {/* Central Holographic Neural Core */}
-              <div className="relative flex flex-col items-center justify-center py-4">
+              <div className="relative flex flex-col items-center justify-center">
                 {/* Outer Rotating Nebula Rings */}
-                <div className="relative w-36 h-36 flex items-center justify-center">
+                <div className="relative w-28 h-28 flex items-center justify-center">
                   {/* Outer Laser Ring */}
                   <div className="absolute inset-0 rounded-full border border-dashed border-indigo-500/40 animate-[spin_8s_linear_infinite]" />
                   
                   {/* Reverse Ring */}
-                  <div className="absolute inset-2 rounded-full border border-t-cyan-400 border-r-transparent border-b-fuchsia-500 border-l-transparent animate-[spin_4s_linear_infinite_reverse]" />
+                  <div className="absolute inset-1.5 rounded-full border border-t-cyan-400 border-r-transparent border-b-fuchsia-500 border-l-transparent animate-[spin_4s_linear_infinite_reverse]" />
 
                   {/* Pulsing Glow Sphere */}
-                  <div className="absolute inset-5 rounded-full bg-gradient-to-tr from-cyan-500/30 via-indigo-600/40 to-fuchsia-500/30 blur-md animate-pulse" />
+                  <div className="absolute inset-4 rounded-full bg-gradient-to-tr from-cyan-500/30 via-indigo-600/40 to-fuchsia-500/30 blur-md animate-pulse" />
 
                   {/* Center AI Nucleus */}
-                  <div className="relative w-16 h-16 rounded-2xl bg-[#0d0d18] border border-indigo-400/60 shadow-[0_0_30px_rgba(99,102,241,0.5)] flex flex-col items-center justify-center">
-                    <span className="text-2xl animate-bounce">⚡</span>
-                    <span className="text-[8px] font-mono text-cyan-300 font-bold uppercase tracking-widest mt-0.5">
+                  <div className="relative w-14 h-14 rounded-2xl bg-[#0d0d18] border border-indigo-400/60 shadow-[0_0_25px_rgba(99,102,241,0.5)] flex flex-col items-center justify-center">
+                    <span className="text-xl animate-bounce">⚡</span>
+                    <span className="text-[7.5px] font-mono text-cyan-300 font-bold uppercase tracking-widest mt-0.5">
                       GEMINI
                     </span>
                   </div>
                 </div>
 
                 {/* Live Status Headline */}
-                <div className="text-center mt-3 space-y-1">
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-indigo-500/10 border border-indigo-500/30 rounded-full">
-                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-                    <span className="text-[11px] font-semibold text-indigo-300 uppercase tracking-wider">
+                <div className="text-center mt-2 space-y-1">
+                  <div className="inline-flex items-center gap-1.5 px-3 py-0.5 bg-indigo-500/10 border border-indigo-500/30 rounded-full">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+                    <span className="text-[10px] font-semibold text-indigo-300 uppercase tracking-wider">
                       {AI_PHASES[currentPhase]?.badge || "PROCESSING"}
                     </span>
                   </div>
-                  <h3 className="text-sm font-bold text-white tracking-wide">
+                  <h3 className="text-xs sm:text-sm font-bold text-white tracking-wide">
                     {AI_PHASES[currentPhase]?.title || "Analyzing Resume Data"}
                   </h3>
-                  <p className="text-[11px] text-gray-400 max-w-md mx-auto">
+                  <p className="text-[11px] text-gray-400 max-w-md mx-auto line-clamp-2">
                     {AI_PHASES[currentPhase]?.detail}
                   </p>
                 </div>
               </div>
 
               {/* Glowing High-Tech Progress Bar */}
-              <div className="space-y-1.5 max-w-xl mx-auto">
-                <div className="flex justify-between text-[11px] font-mono">
+              <div className="space-y-1 max-w-xl mx-auto">
+                <div className="flex justify-between text-[10.5px] font-mono">
                   <span className="text-gray-400">NEURAL REASONING PROGRESS</span>
                   <span className="text-cyan-400 font-bold">{progress}%</span>
                 </div>
-                <div className="h-2 w-full bg-[#141424] rounded-full overflow-hidden p-0.5 border border-[#22223a]">
+                <div className="h-1.5 w-full bg-[#141424] rounded-full overflow-hidden p-0.5 border border-[#22223a]">
                   <div
                     className="h-full rounded-full bg-gradient-to-r from-cyan-400 via-indigo-500 to-fuchsia-500 transition-all duration-300 shadow-[0_0_12px_rgba(99,102,241,0.8)]"
                     style={{ width: `${progress}%` }}
@@ -326,19 +331,19 @@ export default function ResumeAnalysisModal({ isOpen, onClose, onSyncSuccess }) 
               </div>
 
               {/* Sci-Fi Live Telemetry Terminal */}
-              <div className="max-w-xl mx-auto bg-[#07070d] border border-[#1b1b2d] rounded-xl p-3 shadow-inner font-mono text-[11px] space-y-1.5 overflow-hidden">
-                <div className="flex items-center justify-between pb-1.5 border-b border-[#181828] text-[10px] text-gray-500">
+              <div className="max-w-xl mx-auto bg-[#07070d] border border-[#1b1b2d] rounded-xl p-2.5 shadow-inner font-mono text-[11px] space-y-1 overflow-hidden">
+                <div className="flex items-center justify-between pb-1 border-b border-[#181828] text-[9.5px] text-gray-500">
                   <span className="flex items-center gap-1.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
                     LIVE AI TELEMETRY STREAM
                   </span>
                   <span>NODE: GEMINI-2.5-FLASH</span>
                 </div>
-                <div className="max-h-28 overflow-y-auto space-y-1 text-gray-300 pr-1 scrollbar-thin">
+                <div ref={terminalBoxRef} className="max-h-24 overflow-y-auto space-y-1 text-gray-300 pr-1 scrollbar-thin">
                   {terminalLogs.map((log, idx) => (
                     <div
                       key={idx}
-                      className={`leading-relaxed text-[10.5px] ${
+                      className={`leading-relaxed text-[10px] ${
                         idx === terminalLogs.length - 1
                           ? "text-cyan-300 font-semibold"
                           : "text-gray-400"
@@ -347,7 +352,6 @@ export default function ResumeAnalysisModal({ isOpen, onClose, onSyncSuccess }) 
                       {log}
                     </div>
                   ))}
-                  <div ref={terminalEndRef} />
                 </div>
               </div>
             </div>
