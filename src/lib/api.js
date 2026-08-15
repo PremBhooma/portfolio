@@ -100,6 +100,12 @@ export const applyProjectSync = (approvedData) =>
     body: JSON.stringify(approvedData),
   });
 
+export const enhanceProjectWithAI = (params) =>
+  apiFetch("/api/projects/ai-enhance", {
+    method: "POST",
+    body: JSON.stringify(params),
+  });
+
 // ============ RESUME ============
 export const getResume = () => apiFetch("/api/resume");
 
