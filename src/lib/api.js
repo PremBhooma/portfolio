@@ -127,6 +127,13 @@ export const runAiPlayground = (playgroundData) =>
     body: JSON.stringify(playgroundData),
   });
 
+export const getAiAnalytics = () => apiFetch("/api/ai-config/analytics");
+
+export const clearAiAnalytics = () =>
+  apiFetch("/api/ai-config/analytics/clear", {
+    method: "DELETE",
+  });
+
 // ============ RESUME ============
 export const getResume = () => apiFetch("/api/resume");
 

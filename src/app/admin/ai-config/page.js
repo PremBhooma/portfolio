@@ -1,7 +1,14 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { getAiConfig, updateAiConfig, testAiConnection, runAiPlayground } from "@/lib/api";
+import { useState, useEffect, useCallback } from "react";
+import {
+  getAiConfig,
+  updateAiConfig,
+  testAiConnection,
+  runAiPlayground,
+  getAiAnalytics,
+  clearAiAnalytics,
+} from "@/lib/api";
 
 const SUPPORTED_MODELS = [
   {
@@ -37,6 +44,20 @@ const PLAYGROUND_PRESETS = {
   custom: "Explain why clean code architecture improves scalability in 2 concise sentences.",
 };
 
+const ACTION_LABELS = {
+  resume_analysis: "Resume Project Analysis",
+  overview_polish: "Project Overview Polish",
+  title_polish: "Project Title Polish",
+  feature_polish: "Feature Bullet Polish",
+  feature_title: "Feature Title Generation",
+  generate_features: "AI Features Auto-Gen",
+  suggest_badges: "AI Tech Badges Suggestion",
+  categorize_stack: "Tech Stack Categorization",
+  playground_test: "Playground Sandbox Test",
+  test_connection: "Live API Connection Ping",
+  general_ai: "General Gemini Request",
+};
+
 export default function AdminAiConfigPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -59,7 +80,10 @@ export default function AdminAiConfigPage() {
   const [lastTestedAt, setLastTestedAt] = useState(null);
   const [lastTestStatus, setLastTestStatus] = useState("untested");
   const [lastTestLatency, setLastTestLatency] = useState(0);
-  const [availableModelsList, setAvailableModelsList] = useState([]);
+
+  // Analytics States
+  const [analytics, setAnalytics] = useState(null);
+  const [loadingAnalytics, setLoadingAnalytics] = useState(false);
 
   // Playground States
   const [playgroundAction, setPlaygroundAction] = useState("description");
@@ -74,7 +98,7 @@ export default function AdminAiConfigPage() {
   };
 
   // Load active dynamic AI configuration
-  const loadConfig = async () => {
+  const loadConfig = useCallback(async () => {
     try {
       setLoading(true);
       const data = await getAiConfig();
@@ -94,11 +118,25 @@ export default function AdminAiConfigPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  // Load Usage Analytics
+  const loadAnalytics = useCallback(async () => {
+    try {
+      setLoadingAnalytics(true);
+      const data = await getAiAnalytics();
+      setAnalytics(data);
+    } catch (err) {
+      console.warn("Failed to load AI analytics:", err.message);
+    } finally {
+      setLoadingAnalytics(false);
+    }
+  }, []);
 
   useEffect(() => {
     loadConfig();
-  }, []);
+    loadAnalytics();
+  }, [loadConfig, loadAnalytics]);
 
   // Save Config
   const handleSave = async (e) => {
@@ -123,6 +161,7 @@ export default function AdminAiConfigPage() {
       setApiKeyInput("");
       setHasApiKey(res.config.hasApiKey);
       setMaskedKey(res.config.maskedApiKey);
+      loadAnalytics();
     } catch (err) {
       showNotice("Save failed: " + err.message, "error");
     } finally {
@@ -140,12 +179,12 @@ export default function AdminAiConfigPage() {
         setLastTestStatus("success");
         setLastTestLatency(res.latencyMs);
         setLastTestedAt(new Date());
-        if (res.availableModels) setAvailableModelsList(res.availableModels);
         showNotice(`✓ Connection Verified! Latency: ${res.latencyMs}ms (${res.availableModelsCount || 0} models ready)`, "success");
       } else {
         setLastTestStatus("error");
         showNotice("Verification Failed: " + res.message, "error");
       }
+      loadAnalytics();
     } catch (err) {
       setLastTestStatus("error");
       showNotice("Connection failed: " + err.message, "error");
@@ -179,11 +218,24 @@ export default function AdminAiConfigPage() {
         } else {
           setPlaygroundOutput(JSON.stringify(res.result, null, 2));
         }
+        loadAnalytics();
       }
     } catch (err) {
       setPlaygroundOutput("Error: " + err.message);
     } finally {
       setPlaygroundLoading(false);
+    }
+  };
+
+  // Clear Logs
+  const handleClearLogs = async () => {
+    if (!confirm("Are you sure you want to reset all AI activity and usage logs?")) return;
+    try {
+      await clearAiAnalytics();
+      showNotice("AI usage logs have been reset.", "success");
+      loadAnalytics();
+    } catch (err) {
+      showNotice("Failed to clear logs: " + err.message, "error");
     }
   };
 
@@ -198,8 +250,16 @@ export default function AdminAiConfigPage() {
     );
   }
 
+  const todayRequests = analytics?.today?.requests || 0;
+  const dailyLimit = analytics?.quotas?.dailyLimit || 1500;
+  const usedPercent = analytics?.today?.usedPercent || 0;
+  const remainingToday = analytics?.today?.remainingRequests !== undefined ? analytics.today.remainingRequests : dailyLimit;
+  const lifetimeCalls = analytics?.lifetime?.totalRequests || 0;
+  const lifetimeTokens = analytics?.lifetime?.totalTokens || 0;
+  const avgLatency = analytics?.lifetime?.avgLatencyMs || lastTestLatency || 0;
+
   return (
-    <div className="space-y-6 max-w-full pb-10">
+    <div className="space-y-6 max-w-full pb-12 text-xs">
       {/* Toast Notification */}
       {message.text && (
         <div
@@ -221,12 +281,12 @@ export default function AdminAiConfigPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#1e1e32] pb-4">
         <div>
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-cyan-500/20 via-indigo-500/20 to-fuchsia-500/20 border border-indigo-500/40 flex items-center justify-center text-sm shadow-[0_0_15px_rgba(99,102,241,0.25)]">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-500/20 via-indigo-500/20 to-fuchsia-500/20 border border-indigo-500/40 flex items-center justify-center text-base shadow-[0_0_15px_rgba(99,102,241,0.25)]">
               ⚡
             </div>
             <div>
-              <h1 className="text-lg font-bold text-white tracking-wide">Gemini AI Engine Configuration</h1>
-              <p className="text-xs text-gray-400">Dynamic model orchestration, credentials & interactive AI sandbox</p>
+              <h1 className="text-lg font-bold text-white tracking-wide">Gemini AI Engine & Usage Monitor</h1>
+              <p className="text-xs text-gray-400">Dynamic model orchestration, quota tracking & live execution diagnostics</p>
             </div>
           </div>
         </div>
@@ -279,14 +339,193 @@ export default function AdminAiConfigPage() {
       </div>
 
       {/* ============================================================ */}
-      {/* 1. API CREDENTIALS & KEY MANAGEMENT */}
+      {/* 1. REAL-TIME AI USAGE & QUOTA ANALYTICS (NEW!) */}
+      {/* ============================================================ */}
+      <div className="bg-[#0e0e18] border border-[#1e1e32] rounded-2xl p-4 sm:p-5 space-y-4 shadow-sm">
+        <div className="flex items-center justify-between border-b border-[#1a1a2c] pb-3">
+          <div className="flex items-center gap-2">
+            <span className="text-base">📊</span>
+            <div>
+              <h2 className="text-sm font-bold text-white">Gemini API Consumption & Free Tier Quotas</h2>
+              <p className="text-[11px] text-gray-400">Live requests, token consumption, and daily rate limit tracking</p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={loadAnalytics}
+              disabled={loadingAnalytics}
+              className="text-[11px] text-gray-400 hover:text-white px-2.5 py-1 bg-[#161628] hover:bg-[#202036] rounded-lg border border-[#262640] transition-colors"
+            >
+              {loadingAnalytics ? "Refreshing..." : "🔄 Refresh"}
+            </button>
+          </div>
+        </div>
+
+        {/* 4 KPI Cards */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+          {/* Card 1: Today's Requests */}
+          <div className="bg-[#121222] border border-[#1f1f38] p-3.5 rounded-xl space-y-1 relative overflow-hidden">
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] font-mono text-gray-400 uppercase tracking-wider">Today&apos;s Calls</span>
+              <span className="text-xs">⚡</span>
+            </div>
+            <p className="text-xl font-bold text-white tracking-tight">
+              {todayRequests} <span className="text-xs text-gray-400 font-normal">/ {dailyLimit}</span>
+            </p>
+            <p className="text-[10.5px] text-emerald-400 font-medium">
+              {remainingToday} calls remaining today
+            </p>
+          </div>
+
+          {/* Card 2: Daily Quota Bar */}
+          <div className="bg-[#121222] border border-[#1f1f38] p-3.5 rounded-xl space-y-1.5">
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] font-mono text-gray-400 uppercase tracking-wider">Daily Quota</span>
+              <span className="text-xs font-mono font-bold text-cyan-300">{usedPercent}%</span>
+            </div>
+            <div className="h-2 w-full bg-[#090912] rounded-full overflow-hidden border border-[#202036]">
+              <div
+                className="h-full bg-gradient-to-r from-cyan-400 via-indigo-500 to-fuchsia-500 rounded-full transition-all duration-500 shadow-[0_0_8px_rgba(99,102,241,0.6)]"
+                style={{ width: `${Math.max(4, usedPercent)}%` }}
+              />
+            </div>
+            <p className="text-[10.5px] text-gray-400">1,500 Requests / Day Free Limit</p>
+          </div>
+
+          {/* Card 3: Total Lifetime Calls */}
+          <div className="bg-[#121222] border border-[#1f1f38] p-3.5 rounded-xl space-y-1">
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] font-mono text-gray-400 uppercase tracking-wider">Lifetime Calls</span>
+              <span className="text-xs">🚀</span>
+            </div>
+            <p className="text-xl font-bold text-indigo-300 tracking-tight">
+              {lifetimeCalls} <span className="text-xs text-gray-400 font-normal">requests</span>
+            </p>
+            <p className="text-[10.5px] text-gray-400">
+              Avg Latency: <span className="text-gray-200 font-mono">{avgLatency}ms</span>
+            </p>
+          </div>
+
+          {/* Card 4: Tokens Processed */}
+          <div className="bg-[#121222] border border-[#1f1f38] p-3.5 rounded-xl space-y-1">
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] font-mono text-gray-400 uppercase tracking-wider">Total Tokens</span>
+              <span className="text-xs">🪙</span>
+            </div>
+            <p className="text-xl font-bold text-fuchsia-300 tracking-tight font-mono">
+              {lifetimeTokens.toLocaleString()}
+            </p>
+            <p className="text-[10.5px] text-gray-400">
+              Today: <span className="text-gray-200 font-mono">{(analytics?.today?.tokens || 0).toLocaleString()} tokens</span>
+            </p>
+          </div>
+        </div>
+
+        {/* Feature Usage Breakdown & Recent Logs */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-3.5 pt-1">
+          {/* Left: Feature Breakdown */}
+          <div className="bg-[#0a0a14] border border-[#1b1b2e] rounded-xl p-3.5 space-y-2.5">
+            <span className="text-[11px] font-bold text-gray-300 uppercase tracking-wider block border-b border-[#181828] pb-1.5">
+              Usage by Feature
+            </span>
+
+            {analytics?.featureBreakdown?.length > 0 ? (
+              <div className="space-y-2">
+                {analytics.featureBreakdown.map((item, idx) => (
+                  <div key={idx} className="space-y-1">
+                    <div className="flex items-center justify-between text-[11px]">
+                      <span className="text-gray-300 font-medium">
+                        {ACTION_LABELS[item.action] || item.action}
+                      </span>
+                      <span className="font-mono text-indigo-300 font-bold">
+                        {item.count} calls ({item.tokens.toLocaleString()} tok)
+                      </span>
+                    </div>
+                    <div className="h-1.5 w-full bg-[#121220] rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-indigo-500 rounded-full"
+                        style={{
+                          width: `${Math.min(100, Math.round((item.count / (lifetimeCalls || 1)) * 100))}%`,
+                        }}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-gray-500 text-center py-6">No feature calls recorded yet.</p>
+            )}
+          </div>
+
+          {/* Right (2 cols): Live Activity Feed */}
+          <div className="lg:col-span-2 bg-[#0a0a14] border border-[#1b1b2e] rounded-xl p-3.5 space-y-2.5">
+            <div className="flex items-center justify-between border-b border-[#181828] pb-1.5">
+              <span className="text-[11px] font-bold text-gray-300 uppercase tracking-wider">
+                Recent AI Activity Stream
+              </span>
+              {analytics?.recentLogs?.length > 0 && (
+                <button
+                  type="button"
+                  onClick={handleClearLogs}
+                  className="text-[10px] text-gray-500 hover:text-red-400 transition-colors"
+                >
+                  Clear History
+                </button>
+              )}
+            </div>
+
+            {analytics?.recentLogs?.length > 0 ? (
+              <div className="max-h-48 overflow-y-auto space-y-1.5 pr-1 scrollbar-thin">
+                {analytics.recentLogs.map((log, idx) => (
+                  <div
+                    key={idx}
+                    className="flex items-center justify-between p-2 bg-[#0e0e18] border border-[#1c1c2e] rounded-lg text-[10.5px] font-mono gap-2"
+                  >
+                    <div className="flex items-center gap-2 min-w-0">
+                      <span
+                        className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${
+                          log.status === "success" ? "bg-emerald-400" : "bg-red-400"
+                        }`}
+                      />
+                      <span className="text-gray-200 font-sans truncate font-medium">
+                        {ACTION_LABELS[log.action] || log.action}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-2.5 flex-shrink-0 text-gray-400">
+                      <span className="text-indigo-400">{log.totalTokens || 0} tok</span>
+                      <span className="text-cyan-400">{log.latencyMs || 0}ms</span>
+                      <span className="text-gray-500">
+                        {new Date(log.createdAt).toLocaleTimeString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                          second: "2-digit",
+                        })}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-gray-500 text-center py-6">
+                No recent activity. Use the AI Resume analyzer or Project Assistant to see real-time logs here.
+              </p>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* ============================================================ */}
+      {/* 2. API CREDENTIALS & KEY MANAGEMENT */}
       {/* ============================================================ */}
       <div className="bg-[#0e0e18] border border-[#1e1e32] rounded-2xl p-4 sm:p-5 space-y-4 shadow-sm">
         <div className="flex items-center justify-between border-b border-[#1a1a2c] pb-3">
           <div className="flex items-center gap-2">
             <span className="text-base">🔑</span>
             <div>
-              <h2 className="text-sm font-bold text-white">API Credentials</h2>
+              <h2 className="text-sm font-bold text-white">API Credentials & Keys</h2>
               <p className="text-[11px] text-gray-400">Google AI Studio Generative Language API Key</p>
             </div>
           </div>
@@ -340,27 +579,11 @@ export default function AdminAiConfigPage() {
                 : "No API key configured. Paste your Google AI Studio key above to activate AI features."}
             </p>
           </div>
-
-          {/* Quota & Limits Info Card */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1">
-            <div className="bg-[#121222] border border-[#1f1f38] p-2.5 rounded-xl space-y-0.5">
-              <span className="text-[10px] font-mono text-gray-400 uppercase">Requests / Min (RPM)</span>
-              <p className="text-xs font-bold text-indigo-300">15 RPM (Free Tier)</p>
-            </div>
-            <div className="bg-[#121222] border border-[#1f1f38] p-2.5 rounded-xl space-y-0.5">
-              <span className="text-[10px] font-mono text-gray-400 uppercase">Requests / Day (RPD)</span>
-              <p className="text-xs font-bold text-cyan-300">1,500 RPD (Free Tier)</p>
-            </div>
-            <div className="bg-[#121222] border border-[#1f1f38] p-2.5 rounded-xl space-y-0.5">
-              <span className="text-[10px] font-mono text-gray-400 uppercase">Token Context</span>
-              <p className="text-xs font-bold text-fuchsia-300">1,000,000 TPM</p>
-            </div>
-          </div>
         </div>
       </div>
 
       {/* ============================================================ */}
-      {/* 2. DYNAMIC MODEL SELECTION & INFERENCE TUNING */}
+      {/* 3. DYNAMIC MODEL SELECTION & INFERENCE TUNING */}
       {/* ============================================================ */}
       <div className="bg-[#0e0e18] border border-[#1e1e32] rounded-2xl p-4 sm:p-5 space-y-4 shadow-sm">
         <div className="flex items-center gap-2 border-b border-[#1a1a2c] pb-3">
@@ -452,7 +675,7 @@ export default function AdminAiConfigPage() {
       </div>
 
       {/* ============================================================ */}
-      {/* 3. FEATURE TOGGLES */}
+      {/* 4. FEATURE TOGGLES */}
       {/* ============================================================ */}
       <div className="bg-[#0e0e18] border border-[#1e1e32] rounded-2xl p-4 sm:p-5 space-y-3.5 shadow-sm">
         <div className="flex items-center gap-2 border-b border-[#1a1a2c] pb-3">
@@ -509,7 +732,7 @@ export default function AdminAiConfigPage() {
       </div>
 
       {/* ============================================================ */}
-      {/* 4. LIVE INTERACTIVE AI TEST SANDBOX / PLAYGROUND */}
+      {/* 5. LIVE INTERACTIVE AI TEST SANDBOX / PLAYGROUND */}
       {/* ============================================================ */}
       <div className="bg-[#0e0e18] border border-[#1e1e32] rounded-2xl p-4 sm:p-5 space-y-4 shadow-sm">
         <div className="flex items-center justify-between border-b border-[#1a1a2c] pb-3">
@@ -606,7 +829,7 @@ export default function AdminAiConfigPage() {
       </div>
 
       {/* ============================================================ */}
-      {/* 5. SAVE BUTTON BAR */}
+      {/* 6. SAVE BUTTON BAR */}
       {/* ============================================================ */}
       <div className="flex items-center justify-between pt-3 border-t border-[#1e1e32]">
         <span className="text-xs text-gray-500">
