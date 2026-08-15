@@ -94,6 +94,12 @@ export const reorderProjects = (orders) =>
     body: JSON.stringify({ orders }),
   });
 
+export const applyProjectSync = (approvedData) =>
+  apiFetch("/api/projects/apply-sync", {
+    method: "POST",
+    body: JSON.stringify(approvedData),
+  });
+
 // ============ RESUME ============
 export const getResume = () => apiFetch("/api/resume");
 
@@ -106,6 +112,11 @@ export const uploadResume = (formData) =>
 export const deleteResume = () =>
   apiFetch("/api/resume", {
     method: "DELETE",
+  });
+
+export const analyzeResume = () =>
+  apiFetch("/api/resume/analyze", {
+    method: "POST",
   });
 
 export const getResumeDownloadUrl = () => `${API_BASE}/api/resume/download`;

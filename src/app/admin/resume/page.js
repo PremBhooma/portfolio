@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { getResume, uploadResume, deleteResume, getResumeDownloadUrl, getImageUrl } from "@/lib/api";
+import ResumeAnalysisModal from "@/components/admin/ResumeAnalysisModal";
 
 export default function AdminResumePage() {
   const [resume, setResume] = useState(null);
@@ -9,6 +10,7 @@ export default function AdminResumePage() {
   const [uploading, setUploading] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [dragOver, setDragOver] = useState(false);
+  const [showAnalysisModal, setShowAnalysisModal] = useState(false);
 
   const fetchResume = async () => {
     try {
@@ -71,6 +73,13 @@ export default function AdminResumePage() {
 
   return (
     <div className="space-y-4 max-w-full">
+      {/* Resume Analysis Modal */}
+      <ResumeAnalysisModal
+        isOpen={showAnalysisModal}
+        onClose={() => setShowAnalysisModal(false)}
+        onSyncSuccess={fetchResume}
+      />
+
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#1e1e2e] pb-3">
         <div>
@@ -79,7 +88,14 @@ export default function AdminResumePage() {
         </div>
 
         {resume && (
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap">
+            <button
+              onClick={() => setShowAnalysisModal(true)}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white text-xs font-medium rounded-md shadow-md transition-all"
+            >
+              ⚡ Analyze Resume & Sync Projects
+            </button>
+
             <a
               href={fileUrl}
               target="_blank"

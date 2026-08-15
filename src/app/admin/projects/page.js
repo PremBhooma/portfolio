@@ -3,6 +3,7 @@
 import { useEffect, useState, useMemo } from "react";
 import Link from "next/link";
 import { getAllProjects, deleteProject, getImageUrl } from "@/lib/api";
+import ResumeAnalysisModal from "@/components/admin/ResumeAnalysisModal";
 
 export default function AdminProjectsPage() {
   const [projects, setProjects] = useState([]);
@@ -11,6 +12,7 @@ export default function AdminProjectsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("all"); // "all" | "active" | "inactive"
   const [viewMode, setViewMode] = useState("grid"); // "grid" | "list"
+  const [showAnalysisModal, setShowAnalysisModal] = useState(false);
 
   const fetchProjects = async () => {
     try {
@@ -66,6 +68,13 @@ export default function AdminProjectsPage() {
 
   return (
     <div className="space-y-4 max-w-full">
+      {/* Resume Analysis Workbench Modal */}
+      <ResumeAnalysisModal
+        isOpen={showAnalysisModal}
+        onClose={() => setShowAnalysisModal(false)}
+        onSyncSuccess={fetchProjects}
+      />
+
       {/* Header & KPI Summary */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#1e1e2e] pb-3">
         <div>
@@ -133,8 +142,15 @@ export default function AdminProjectsPage() {
           </select>
         </div>
 
-        {/* Right: View Mode Toggle & Add Button */}
-        <div className="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
+        {/* Right: View Mode Toggle & Actions */}
+        <div className="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end flex-wrap">
+          <button
+            onClick={() => setShowAnalysisModal(true)}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white text-xs font-medium rounded-md shadow-sm transition-all"
+          >
+            ⚡ Analyze Resume & Sync
+          </button>
+
           {/* View Mode Switcher */}
           <div className="flex items-center bg-[#0a0a0f] border border-[#2a2a3a] rounded-md p-0.5">
             <button
