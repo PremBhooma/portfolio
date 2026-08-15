@@ -106,6 +106,27 @@ export const enhanceProjectWithAI = (params) =>
     body: JSON.stringify(params),
   });
 
+// ============ AI CONFIGURATION ============
+export const getAiConfig = () => apiFetch("/api/ai-config");
+
+export const updateAiConfig = (configData) =>
+  apiFetch("/api/ai-config", {
+    method: "PUT",
+    body: JSON.stringify(configData),
+  });
+
+export const testAiConnection = (apiKeyToTest) =>
+  apiFetch("/api/ai-config/test", {
+    method: "POST",
+    body: JSON.stringify({ apiKeyToTest }),
+  });
+
+export const runAiPlayground = (playgroundData) =>
+  apiFetch("/api/ai-config/playground", {
+    method: "POST",
+    body: JSON.stringify(playgroundData),
+  });
+
 // ============ RESUME ============
 export const getResume = () => apiFetch("/api/resume");
 
