@@ -99,7 +99,7 @@ export default function ProjectForm({ initialData, onSubmit, isEditing = false }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-3xl space-y-4 text-xs">
+    <form onSubmit={handleSubmit} className="max-w-full space-y-4 text-xs">
       {error && (
         <div className="bg-red-500/10 border border-red-500/30 text-red-400 text-xs rounded-md px-3 py-2">
           {error}
@@ -292,11 +292,10 @@ export default function ProjectForm({ initialData, onSubmit, isEditing = false }
           <button
             type="button"
             onClick={() => setIsActive(!isActive)}
-            className={`w-full px-3 py-1.5 rounded-md border text-xs font-medium transition-colors ${
-              isActive
+            className={`w-full px-3 py-1.5 rounded-md border text-xs font-medium transition-colors ${isActive
                 ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-400"
                 : "bg-yellow-500/10 border-yellow-500/30 text-yellow-400"
-            }`}
+              }`}
           >
             {isActive ? "✓ Active" : "○ Inactive"}
           </button>

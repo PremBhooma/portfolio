@@ -343,8 +343,36 @@ export default function ResumeAnalysisModal({ isOpen, onClose, onSyncSuccess }) 
                                       {diff.oldValue}
                                     </div>
                                     <div className="bg-emerald-500/5 border border-emerald-500/20 p-2 rounded text-emerald-300">
-                                      <span className="block text-[9px] text-emerald-400 font-bold uppercase mb-0.5">Extracted from Resume:</span>
+                                      <span className="block text-[9px] text-emerald-400 font-bold uppercase mb-0.5">AI Generated Overview:</span>
                                       {diff.newValue}
+                                    </div>
+                                  </div>
+                                )}
+
+                                {diff.field === "features" && (
+                                  <div className="text-[11px] text-gray-300 pt-1 space-y-1">
+                                    <p className="text-gray-400 text-[10px]">
+                                      Syncing <span className="text-emerald-400 font-semibold">{Array.isArray(diff.newValue) ? diff.newValue.length : 0} detailed bullet points</span> as Key Features:
+                                    </p>
+                                    <div className="max-h-32 overflow-y-auto space-y-1 bg-[#0a0a0f] p-2 rounded border border-[#1e1e2e]">
+                                      {Array.isArray(diff.newValue) && diff.newValue.map((f, fi) => (
+                                        <div key={fi} className="text-[10px] text-gray-300 leading-relaxed">
+                                          <span className="text-indigo-400 font-medium">• {f.title}: </span>
+                                          <span className="text-gray-400">{f.description?.slice(0, 100)}{f.description?.length > 100 ? "..." : ""}</span>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  </div>
+                                )}
+
+                                {diff.field === "techStack" && (
+                                  <div className="text-[11px] text-gray-300 pt-1">
+                                    <div className="flex flex-wrap gap-1">
+                                      {Array.isArray(diff.newValue) && diff.newValue.map((t, ti) => (
+                                        <span key={ti} className="text-[10px] px-2 py-0.5 bg-[#1a1a2a] text-indigo-300 rounded border border-[#2a2a3a]">
+                                          <strong className="text-gray-400">{t.category}:</strong> {t.items}
+                                        </span>
+                                      ))}
                                     </div>
                                   </div>
                                 )}
