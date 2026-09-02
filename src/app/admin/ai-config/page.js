@@ -94,7 +94,11 @@ export default function AdminAiConfigPage() {
 
   const showNotice = (text, type = "success") => {
     setMessage({ text, type });
-    setTimeout(() => setMessage({ text: "", type: "" }), 5000);
+    // Errors stay until dismissed — they carry remediation steps the admin needs
+    // time to read and act on. Only transient confirmations auto-hide.
+    if (type !== "error") {
+      setTimeout(() => setMessage({ text: "", type: "" }), 5000);
+    }
   };
 
   // Load active dynamic AI configuration
@@ -263,17 +267,17 @@ export default function AdminAiConfigPage() {
       {/* Toast Notification */}
       {message.text && (
         <div
-          className={`sticky top-2 z-40 px-4 py-2.5 rounded-xl border text-xs font-medium backdrop-blur-md shadow-xl flex items-center justify-between animate-fade-in ${
+          className={`sticky top-2 z-40 px-4 py-2.5 rounded-xl border text-xs font-medium backdrop-blur-md shadow-xl flex items-start justify-between gap-3 animate-fade-in ${
             message.type === "error"
               ? "bg-red-500/10 border-red-500/30 text-red-300"
               : "bg-emerald-500/10 border-emerald-500/30 text-emerald-300"
           }`}
         >
-          <span className="flex items-center gap-2">
-            <span>{message.type === "error" ? "⚠️" : "✨"}</span>
+          <span className="flex items-start gap-2 leading-relaxed">
+            <span className="flex-shrink-0">{message.type === "error" ? "⚠️" : "✨"}</span>
             {message.text}
           </span>
-          <button type="button" onClick={() => setMessage({ text: "", type: "" })} className="text-gray-400 hover:text-white">✕</button>
+          <button type="button" onClick={() => setMessage({ text: "", type: "" })} className="text-gray-400 hover:text-white flex-shrink-0">✕</button>
         </div>
       )}
 
