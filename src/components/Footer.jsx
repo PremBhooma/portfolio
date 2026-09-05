@@ -30,11 +30,11 @@ export default function Footer() {
   }, []);
 
   return (
-    <div className="mt-10 flex space-x-6">
+    <div className="mt-8 flex space-x-5">
       {socialLinks.map((item) => (
         <Link key={item.name || item._id} href={item.href} target="_blank">
           <span className="sr-only">{item.name}</span>
-          <svg className="h-6 w-6 hover:text-[#00246B]" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <svg className="h-5 w-5 hover:text-[#7dd3fc] transition-colors" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path d={item.svgPath} />
           </svg>
         </Link>

@@ -37,12 +37,12 @@ export default function HomePage() {
 
   if (loading) {
     return (
-      <div className="mx-auto max-w-4xl px-6 lg:px-4 py-10 z-10">
-        <div className="h-16 w-3/4 bg-white/5 rounded-lg animate-pulse mb-8" />
-        <div className="space-y-4">
-          <div className="h-4 w-full bg-white/5 rounded animate-pulse" />
-          <div className="h-4 w-5/6 bg-white/5 rounded animate-pulse" />
-          <div className="h-4 w-4/6 bg-white/5 rounded animate-pulse" />
+      <div className="w-full max-w-2xl z-10">
+        <div className="h-10 w-3/4 bg-white/5 rounded-lg animate-pulse mb-6" />
+        <div className="space-y-3">
+          <div className="h-3 w-full bg-white/5 rounded animate-pulse" />
+          <div className="h-3 w-5/6 bg-white/5 rounded animate-pulse" />
+          <div className="h-3 w-4/6 bg-white/5 rounded animate-pulse" />
         </div>
       </div>
     );
@@ -50,16 +50,16 @@ export default function HomePage() {
 
   return (
     <>
-      <div className="mx-auto max-w-4xl px-6 lg:px-4 py-10 z-10">
-        <h1 className="lg:text-8xl text-6xl font-bold tracking-tight font-sounthernAire mb-8 bg-clip-text text-transparent bg-gradient-to-r from-[#fff] to-[#1E2761] drop-shadow-lg">
+      <div className="w-full max-w-2xl z-10">
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight font-sounthernAire mb-5 bg-clip-text text-transparent bg-gradient-to-r from-[#fff] to-[#1E2761] drop-shadow-lg">
           {content?.name || "Prem Bhooma"}
         </h1>
 
-        <div className="space-y-6 text-sm lg:text-[16px] font-nunitoLight drop-shadow">
+        <div className="space-y-4 text-[13px] leading-relaxed lg:text-sm font-nunitoLight drop-shadow">
           <p>{content?.bio}</p>
 
           {content?.highlights?.length > 0 && (
-            <ul className="list-none space-y-2">
+            <ul className="list-none space-y-1.5">
               {content.highlights.map((item, i) => (
                 <li key={i}>{item}</li>
               ))}
@@ -70,8 +70,8 @@ export default function HomePage() {
           {content?.funFact && <p>{content.funFact}</p>}
         </div>
 
-        <div className="mt-5">
-          <Link href="/contact" className="inline-flex items-center">
+        <div className="mt-5 text-[13px] lg:text-sm font-nunitoLight">
+          <Link href="/contact" className="inline-flex items-center hover:text-[#7dd3fc] transition-colors">
             {content?.ctaText || "Let's build something awesome together! CONTACT ME ✨"}
           </Link>
         </div>
