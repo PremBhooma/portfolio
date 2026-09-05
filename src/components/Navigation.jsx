@@ -11,8 +11,8 @@ export default function Navigation() {
 
   const navigation = [
     { name: "Prem Bhooma", href: "/" },
-    { name: "Projects", href: "/projects", warp: true },
-    { name: "Contact", href: "/contact" },
+    { name: "Projects", href: "/projects", warp: "blackhole" },
+    { name: "Contact", href: "/contact", warp: "galaxy" },
   ];
 
   // Filter navigation items based on the current path
@@ -36,7 +36,7 @@ export default function Navigation() {
                         // Let modified clicks (new tab, download) behave normally.
                         if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
                         e.preventDefault();
-                        warpTo(link.href);
+                        warpTo(link.href, link.warp);
                       }
                     : undefined
                 }

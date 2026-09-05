@@ -3,25 +3,28 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
+import { DEFAULT_WARP_EFFECT } from "./warpShaders";
 
-const BlackHoleWarp = dynamic(() => import("./BlackHoleWarp"), { ssr: false });
+const WarpCanvas = dynamic(() => import("./WarpCanvas"), { ssr: false });
 
 const WarpContext = createContext({ warpTo: null, warping: false });
 
 export const useWarp = () => useContext(WarpContext);
 
 /**
- * Routes a navigation through a black hole: the horizon swallows the current
- * page, the route swaps while the screen is dark, then the hole recedes to
- * reveal the destination.
+ * Routes a navigation through a cosmic transition: the effect swallows the
+ * current page, the route swaps while the screen is dark, then it recedes to
+ * reveal the destination. Projects falls into a black hole; Contact flies into a
+ * galaxy.
  */
 export function WarpProvider({ children }) {
   const router = useRouter();
   const [phase, setPhase] = useState(null); // null | "in" | "out"
+  const [effect, setEffect] = useState(DEFAULT_WARP_EFFECT);
   const targetRef = useRef(null);
 
   const warpTo = useCallback(
-    (href) => {
+    (href, nextEffect = DEFAULT_WARP_EFFECT) => {
       // Anyone who asked not to be moved around gets a plain navigation.
       const reduced = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       if (reduced || phase) {
@@ -30,6 +33,7 @@ export function WarpProvider({ children }) {
       }
       targetRef.current = href;
       router.prefetch?.(href);
+      setEffect(nextEffect);
       setPhase("in");
     },
     [phase, router]
@@ -60,7 +64,7 @@ export function WarpProvider({ children }) {
       {children}
       {phase && (
         <div className="fixed inset-0 z-[100]" style={{ pointerEvents: phase === "in" ? "auto" : "none" }} aria-hidden="true">
-          <BlackHoleWarp key={phase} phase={phase} onHandoff={handleHandoff} onComplete={handleComplete} />
+          <WarpCanvas key={`${effect}-${phase}`} effect={effect} phase={phase} onHandoff={handleHandoff} onComplete={handleComplete} />
         </div>
       )}
     </WarpContext.Provider>
