@@ -1,6 +1,7 @@
 import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import { WarpProvider } from "@/components/transition/WarpProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -55,7 +56,7 @@ export default function RootLayout({ children }) {
       <body className={`${geistSans.variable} ${geistMono.variable} ${sounthernAire.variable} ${remachine.variable} ${nunitoRegular.variable}  ${nunitoBold.variable} ${nunitoLight.variable} antialiased`}>
         {" "}
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange>
-          {children}
+          <WarpProvider>{children}</WarpProvider>
         </ThemeProvider>
       </body>
     </html>
