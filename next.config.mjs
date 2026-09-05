@@ -8,9 +8,31 @@ const pwaConfig = {
   skipWaiting: true,
 };
 
+// next/image refuses any host not listed below, so the deployed API host has to
+// be derived from the same variable the client fetches from — otherwise every
+// project image 400s in production while working against a local backend.
+const apiImagePatterns = (() => {
+  if (!process.env.NEXT_PUBLIC_API_URL) return [];
+  try {
+    const { protocol, hostname, port } = new URL(process.env.NEXT_PUBLIC_API_URL);
+    return [
+      {
+        protocol: protocol.replace(":", ""),
+        hostname,
+        ...(port ? { port } : {}),
+        pathname: "/uploads/**",
+      },
+    ];
+  } catch {
+    console.warn(`Ignoring unparseable NEXT_PUBLIC_API_URL: ${process.env.NEXT_PUBLIC_API_URL}`);
+    return [];
+  }
+})();
+
 const nextConfig = {
   images: {
     remotePatterns: [
+      ...apiImagePatterns,
       {
         protocol: "https",
         hostname: "images.unsplash.com",
