@@ -5,7 +5,6 @@ import * as THREE from "three";
 import { DEFAULT_WARP_EFFECT, WARP_EFFECTS, WARP_VERTEX_SHADER } from "./warpShaders";
 
 const easeInOutCubic = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
-const easeOutCubic = (x) => 1 - Math.pow(1 - x, 3);
 const clamp01 = (x) => Math.min(1, Math.max(0, x));
 const smoothRange = (x, a, b) => {
   const t = clamp01((x - a) / (b - a));
@@ -14,17 +13,19 @@ const smoothRange = (x, a, b) => {
 
 export const WARP_IN_DURATION = 1750;
 export const WARP_IN_HANDOFF = 1480; // screen is effectively black by here
-export const WARP_OUT_DURATION = 1150;
 
 /**
  * Full-screen warp renderer shared by every effect. It owns the WebGL context and
  * the timeline; each effect contributes only a fragment shader driven by three
  * uniforms — uTime, uProgress (0 far away, 1 arrived) and uFade (master blackout).
  *
+ * This is a one-way trip: the camera dives in and the screen goes black. The
+ * destination is revealed by fading that black away, never by replaying the
+ * approach backwards.
+ *
  * @param {"blackhole"|"galaxy"} effect
- * @param {"in"|"out"} phase  "in" dives towards the object, "out" backs away from it.
  */
-export default function WarpCanvas({ effect = DEFAULT_WARP_EFFECT, phase, onHandoff, onComplete }) {
+export default function WarpCanvas({ effect = DEFAULT_WARP_EFFECT, onHandoff, onComplete }) {
   const mountRef = useRef(null);
   const callbacks = useRef({ onHandoff, onComplete });
   callbacks.current = { onHandoff, onComplete };
@@ -61,7 +62,7 @@ export default function WarpCanvas({ effect = DEFAULT_WARP_EFFECT, phase, onHand
     const uniforms = {
       uResolution: { value: new THREE.Vector2(1, 1) },
       uTime: { value: 0 },
-      uProgress: { value: phase === "out" ? 1 : 0 },
+      uProgress: { value: 0 },
       uFade: { value: 1 },
     };
 
@@ -79,7 +80,7 @@ export default function WarpCanvas({ effect = DEFAULT_WARP_EFFECT, phase, onHand
     window.addEventListener("resize", resize);
 
     const start = performance.now();
-    const duration = phase === "out" ? WARP_OUT_DURATION : WARP_IN_DURATION;
+    const duration = WARP_IN_DURATION;
     let frameId = 0;
     let handedOff = false;
     let finished = false;
@@ -99,7 +100,7 @@ export default function WarpCanvas({ effect = DEFAULT_WARP_EFFECT, phase, onHand
       callbacks.current.onComplete?.();
     };
 
-    const handoffTimer = phase === "in" ? setTimeout(fireHandoff, WARP_IN_HANDOFF) : null;
+    const handoffTimer = setTimeout(fireHandoff, WARP_IN_HANDOFF);
     const doneTimer = setTimeout(fireComplete, duration);
 
     // Cheap safety net: if the GPU can't keep up, drop resolution rather than stutter.
@@ -122,26 +123,19 @@ export default function WarpCanvas({ effect = DEFAULT_WARP_EFFECT, phase, onHand
       const t = now - start;
       uniforms.uTime.value = t / 1000;
 
-      if (phase === "in") {
-        const x = clamp01((t - 160) / (WARP_IN_HANDOFF - 160));
-        uniforms.uProgress.value = easeInOutCubic(x);
-        uniforms.uFade.value = 1 - smoothRange(t, WARP_IN_HANDOFF - 420, WARP_IN_HANDOFF);
-        mount.style.opacity = String(smoothRange(t, 0, 260));
+      const x = clamp01((t - 160) / (WARP_IN_HANDOFF - 160));
+      uniforms.uProgress.value = easeInOutCubic(x);
+      uniforms.uFade.value = 1 - smoothRange(t, WARP_IN_HANDOFF - 420, WARP_IN_HANDOFF);
+      mount.style.opacity = String(smoothRange(t, 0, 260));
 
-        if (t >= WARP_IN_HANDOFF) fireHandoff();
-      } else {
-        const x = clamp01(t / (duration - 150));
-        uniforms.uProgress.value = 1 - easeOutCubic(x) * 0.58;
-        uniforms.uFade.value = smoothRange(t, 0, 260);
-        mount.style.opacity = String(1 - smoothRange(t, 320, duration));
-      }
+      if (t >= WARP_IN_HANDOFF) fireHandoff();
 
       renderer.render(scene, camera);
 
       if (t >= duration) fireComplete();
     };
 
-    mount.style.opacity = phase === "out" ? "1" : "0";
+    mount.style.opacity = "0";
     frameId = requestAnimationFrame(tick);
 
     return () => {
@@ -154,7 +148,7 @@ export default function WarpCanvas({ effect = DEFAULT_WARP_EFFECT, phase, onHand
       renderer.dispose();
       if (renderer.domElement.parentNode === mount) mount.removeChild(renderer.domElement);
     };
-  }, [effect, phase]);
+  }, [effect]);
 
   return <div ref={mountRef} className="fixed inset-0 bg-black" style={{ opacity: 0 }} />;
 }

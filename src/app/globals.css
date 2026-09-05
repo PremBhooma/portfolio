@@ -140,3 +140,18 @@ body {
     animation: none;
   }
 }
+
+/* Arriving out of a warp: the screen is already black, so the destination is
+   revealed by lifting that black rather than replaying the approach backwards. */
+@keyframes warp-reveal {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.warp-reveal {
+  animation: warp-reveal 420ms ease-out both;
+}
