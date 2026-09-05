@@ -58,11 +58,11 @@ export default function ContactPage() {
         <Particles className="absolute inset-0" quantity={200} ease={100} refresh />
         <Navigation />
         <div className="flex-1 flex justify-center items-center z-10">
-          <div className="mx-auto max-w-4xl px-6 lg:px-4 py-10">
-            <div className="space-y-4 animate-pulse">
-              <div className="h-4 w-full bg-white/5 rounded" />
-              <div className="h-4 w-5/6 bg-white/5 rounded" />
-              <div className="h-4 w-4/6 bg-white/5 rounded" />
+          <div className="mx-auto w-full max-w-2xl px-6 lg:px-4 py-8">
+            <div className="space-y-3 animate-pulse">
+              <div className="h-3 w-full bg-white/5 rounded" />
+              <div className="h-3 w-5/6 bg-white/5 rounded" />
+              <div className="h-3 w-4/6 bg-white/5 rounded" />
             </div>
           </div>
         </div>
@@ -76,12 +76,12 @@ export default function ContactPage() {
         <Particles className="absolute inset-0" quantity={200} ease={100} refresh />
         <Navigation />
         <div className="flex-1 flex justify-center items-center z-10">
-          <div className="mx-auto max-w-4xl px-6 lg:px-4 py-10">
-            <div className="space-y-6 text-sm lg:text-[16px] font-nunitoLight drop-shadow">
+          <div className="mx-auto w-full max-w-2xl px-6 lg:px-4 py-8">
+            <div className="space-y-4 text-[13px] leading-relaxed lg:text-sm font-nunitoLight drop-shadow">
               <p>{content?.intro}</p>
 
               {content?.highlights?.length > 0 && (
-                <ul className="list-none space-y-2">
+                <ul className="list-none space-y-1.5">
                   {content.highlights.map((item, i) => (
                     <li key={i}>{item}</li>
                   ))}
@@ -121,8 +121,8 @@ export default function ContactPage() {
               {content?.closingText && <p>{content.closingText}</p>}
             </div>
 
-            <div className="mt-5">
-              <Link href="/contact" className="inline-flex items-center text-yellow-400 hover:text-yellow-300">
+            <div className="mt-5 text-[13px] lg:text-sm font-nunitoLight">
+              <Link href="/contact" className="inline-flex items-center text-yellow-400 transition-colors hover:text-yellow-300">
                 {content?.ctaText || "Let's ignite something legendary together! CONTACT ME ✨"}
               </Link>
             </div>

@@ -59,7 +59,7 @@ export default function ProjectCard({ project, index, id }) {
           </div>
         )}
 
-        {project.description && <p className="mt-4 text-[13px] leading-relaxed font-nunitoLight text-white/70">{project.description}</p>}
+        {project.description && <p className="mt-4 text-[13px] leading-relaxed lg:text-sm font-nunitoLight text-white/70">{project.description}</p>}
 
         {hasDetails && (
           <>
@@ -75,7 +75,7 @@ export default function ProjectCard({ project, index, id }) {
 
             <div className={`grid transition-[grid-template-rows,opacity] duration-400 ease-out ${open ? "mt-4 grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}>
               <div className="overflow-hidden">
-                <div className="space-y-5 border-t border-white/10 pt-4 text-[13px] font-nunitoLight text-white/70">
+                <div className="space-y-5 border-t border-white/10 pt-4 text-[13px] lg:text-sm font-nunitoLight text-white/70">
                   {project.features?.length > 0 && (
                     <section>
                       <h3 className="mb-2 text-[11px] uppercase tracking-[0.18em] text-white/40">Key features</h3>
